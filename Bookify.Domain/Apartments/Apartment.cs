@@ -2,29 +2,26 @@ using Bookify.Domain.Abstractions;
 
 namespace Bookify.Domain.Apartments;
 
-public sealed class Apartment(Guid id) : Entity(id)
+public sealed class Apartment(
+    Guid id,
+    Name name,
+    Description description,
+    Address address,
+    Money price,
+    Money cleaningFee,
+    List<Amenity> amenities) : Entity(id)
 {
-    public string Name { get; private set; }
+    public Name Name { get; private set; } = name;
 
-    public string Description { get; private set; }
+    public Description Description { get; private set; } = description;
 
-    public string Country { get; private set; }
+    public Address Address { get; private set; } = address;
 
-    public string State { get; private set; }
+    public Money Price { get; private set; } = price;
 
-    public string ZipCode { get; private set; }
-
-    public string Street { get; private set; }
-
-    public decimal Price { get; private set; }
-
-    public string PriceCurrency { get; private set; }
-
-    public decimal CleaningFeeAmount { get; private set; }
-
-    public string CleaningFeeCurrency { get; private set; }
+    public Money CleaningFee { get; private set; } = cleaningFee;
 
     public DateTime? LastBookedOnUtc { get; private set; }
 
-    public List<Amenity> Amenities { get; private set; } = new();
+    public List<Amenity> Amenities { get; private set; } = amenities;
 }
