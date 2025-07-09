@@ -83,6 +83,10 @@ public sealed class Booking : Entity
         return booking;
     }
 
+    private Booking()
+    {
+    }
+
     public Result Confirm(DateTime utcNow)
     {
         if (Status != BookingStatus.Reserved)

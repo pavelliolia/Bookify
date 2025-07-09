@@ -3,26 +3,39 @@ using Bookify.Domain.Shared;
 
 namespace Bookify.Domain.Apartments;
 
-public sealed class Apartment(
-    Guid id,
-    Name name,
-    Description description,
-    Address address,
-    Money price,
-    Money cleaningFee,
-    List<Amenity> amenities) : Entity(id)
+public sealed class Apartment : Entity
 {
-    public Name Name { get; private set; } = name;
+    public Apartment(Guid id,
+        Name name,
+        Description description,
+        Address address,
+        Money price,
+        Money cleaningFee,
+        List<Amenity> amenities) : base(id)
+    {
+        Name = name;
+        Description = description;
+        Address = address;
+        Price = price;
+        CleaningFee = cleaningFee;
+        Amenities = amenities;
+    }
 
-    public Description Description { get; private set; } = description;
+    private Apartment()
+    {
+    }
 
-    public Address Address { get; private set; } = address;
+    public Name Name { get; private set; }
 
-    public Money Price { get; private set; } = price;
+    public Description Description { get; private set; }
 
-    public Money CleaningFee { get; private set; } = cleaningFee;
+    public Address Address { get; private set; }
+
+    public Money Price { get; private set; }
+
+    public Money CleaningFee { get; private set; }
 
     public DateTime? LastBookedOnUtc { get; internal set; }
 
-    public List<Amenity> Amenities { get; private set; } = amenities;
+    public List<Amenity> Amenities { get; private set; }
 }
