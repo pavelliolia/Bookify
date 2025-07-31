@@ -21,6 +21,9 @@ if (app.Environment.IsDevelopment())
     app.UseSwagger();
     app.UseSwaggerUI();
     app.ApplyMigrations();
+
+    // should be used just once to populate the data in DB; then commented out
+    // app.SeedData();
 }
 
 app.UseHttpsRedirection();
