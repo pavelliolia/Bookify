@@ -30,6 +30,10 @@ app.UseHttpsRedirection();
 
 app.UseExceptionHandling();
 
+app.UseAuthentication();
+
+app.UseAuthorization();
+
 app.MapControllers();
 
 app.Run();
