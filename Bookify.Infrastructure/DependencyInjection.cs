@@ -1,3 +1,4 @@
+using Bookify.Application.Abstrastions.Authentication;
 using Bookify.Application.Abstrastions.Clock;
 using Bookify.Application.Abstrastions.Data;
 using Bookify.Application.Abstrastions.Email;
@@ -15,6 +16,7 @@ using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
+using Microsoft.Extensions.Options;
 
 namespace Bookify.Infrastructure;
 
@@ -30,6 +32,15 @@ public static class DependencyInjection
         services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme).AddJwtBearer();
         services.Configure<AuthenticationOptions>(configuration.GetSection("Authentication"));
         services.ConfigureOptions<JwtBearerOptionsSetup>();
+        services.Configure<KeycloakOptions>(configuration.GetSection("Keycloak"));
+        services.AddTransient<AdminAuthorizationDelegatingHandler>();
+
+        services.AddHttpClient<IAuthenticationService, AuthenticationService>((serviceProvider, client) =>
+            {
+                var keycloakOptions = serviceProvider.GetRequiredService<IOptions<KeycloakOptions>>().Value;
+                client.BaseAddress = new Uri(keycloakOptions.AdminUrl);
+            })
+            .AddHttpMessageHandler<AdminAuthorizationDelegatingHandler>();
 
         return services;
     }
